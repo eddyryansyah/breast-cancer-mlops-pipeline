@@ -74,8 +74,6 @@ def main():
     )
     args = parser.parse_args()
 
-    mlflow.set_experiment("Breast Cancer CI Training")
-
     df = load_dataset(args.dataset_path)
 
     model_pipeline, X_train, X_test, y_train, y_test, metrics = train_model(df)
@@ -83,31 +81,32 @@ def main():
     signature = infer_signature(X_test, model_pipeline.predict(X_test))
     input_example = X_test.iloc[:5]
 
-    with mlflow.start_run(run_name="CI_RandomForest_MLProject"):
-        mlflow.log_param("dataset_path", args.dataset_path)
-        mlflow.log_param("model_type", "RandomForestClassifier")
-        mlflow.log_param("n_estimators", 200)
-        mlflow.log_param("max_depth", 5)
-        mlflow.log_param("min_samples_split", 2)
-        mlflow.log_param("min_samples_leaf", 2)
-        mlflow.log_param("random_state", 42)
-        mlflow.log_param("train_rows", X_train.shape[0])
-        mlflow.log_param("test_rows", X_test.shape[0])
-        mlflow.log_param("total_features", X_train.shape[1])
+    # MLflow Project sudah membuat run secara otomatis.
+    # Karena itu, script ini langsung melakukan logging tanpa mlflow.start_run().
+    mlflow.log_param("dataset_path", args.dataset_path)
+    mlflow.log_param("model_type", "RandomForestClassifier")
+    mlflow.log_param("n_estimators", 200)
+    mlflow.log_param("max_depth", 5)
+    mlflow.log_param("min_samples_split", 2)
+    mlflow.log_param("min_samples_leaf", 2)
+    mlflow.log_param("random_state", 42)
+    mlflow.log_param("train_rows", X_train.shape[0])
+    mlflow.log_param("test_rows", X_test.shape[0])
+    mlflow.log_param("total_features", X_train.shape[1])
 
-        for metric_name, metric_value in metrics.items():
-            mlflow.log_metric(metric_name, metric_value)
+    for metric_name, metric_value in metrics.items():
+        mlflow.log_metric(metric_name, metric_value)
 
-        model_output_path = "model.joblib"
-        joblib.dump(model_pipeline, model_output_path)
-        mlflow.log_artifact(model_output_path, artifact_path="model_artifact")
+    model_output_path = "model.joblib"
+    joblib.dump(model_pipeline, model_output_path)
+    mlflow.log_artifact(model_output_path, artifact_path="model_artifact")
 
-        mlflow.sklearn.log_model(
-            sk_model=model_pipeline,
-            artifact_path="model",
-            signature=signature,
-            input_example=input_example,
-        )
+    mlflow.sklearn.log_model(
+        sk_model=model_pipeline,
+        artifact_path="model",
+        signature=signature,
+        input_example=input_example,
+    )
 
     print("Training MLProject selesai.")
     print("Metrics:")
