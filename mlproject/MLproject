@@ -1,0 +1,9 @@
+name: breast-cancer-mlops-pipeline
+
+conda_env: conda.yaml
+
+entry_points:
+  main:
+    parameters:
+      dataset_path: {type: str, default: "../data/processed/breast_cancer_preprocessing.csv"}
+    command: "python modelling.py --dataset_path {dataset_path}"

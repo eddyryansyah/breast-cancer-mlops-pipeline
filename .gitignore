@@ -14,3 +14,10 @@ __pycache__/
 # MLflow local tracking artifacts
 mlruns/
 */mlruns/
+
+# Local model artifacts
+*.joblib
+*.pkl
+
+# VS Code local settings
+.vscode/
