@@ -1,0 +1,8 @@
+pandas
+numpy
+scikit-learn==1.5.2
+matplotlib
+seaborn
+mlflow==2.19.0
+joblib
+dagshub

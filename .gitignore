@@ -1,6 +1,16 @@
+# Virtual environment
 .venv/
+
+# Python cache files
 __pycache__/
-.ipynb_checkpoints/
-.DS_Store
-mlruns/
 *.pyc
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# macOS system files
+.DS_Store
+
+# MLflow local tracking artifacts
+mlruns/
+*/mlruns/
