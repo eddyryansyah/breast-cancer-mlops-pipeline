@@ -1,6 +1,6 @@
 # Breast Cancer MLOps Pipeline
 
-[![MLflow Project CI](https://github.com/eddyryansyah/breast-cancer-mlops-pipeline/actions/workflows/main.yml/badge.svg)](https://github.com/eddyryansyah/breast-cancer-mlops-pipeline/actions/workflows/main.yml)
+[![MLOps Pipeline CI](https://github.com/eddyryansyah/breast-cancer-mlops-pipeline/actions/workflows/main.yml/badge.svg)](https://github.com/eddyryansyah/breast-cancer-mlops-pipeline/actions/workflows/main.yml)
 [![Python](https://img.shields.io/badge/Python-3.12.7-blue)](https://www.python.org/)
 [![MLflow](https://img.shields.io/badge/MLflow-2.19.0-blue)](https://mlflow.org/)
 [![Docker](https://img.shields.io/badge/Docker-Model%20Serving-blue)](https://www.docker.com/)
@@ -17,7 +17,7 @@ This project is designed with two goals:
 1. **Public awareness:** help users understand that certain breast changes may require medical consultation.
 2. **Machine learning demonstration:** classify numerical tumor feature samples as benign or malignant using a trained machine learning model.
 
-The final live demo is planned to include a simple awareness section for users and a machine learning prediction section based on sample numerical tumor data.
+The live demo includes a simple awareness section for users and a machine learning prediction section based on sample numerical tumor data.
 
 ## Important Note
 
@@ -29,12 +29,12 @@ If users notice unusual breast changes, they should consult a qualified healthca
 
 ## Project Links
 
-| Resource                  | Link                                                               |
-| ------------------------- | ------------------------------------------------------------------ |
-| GitHub Repository         | https://github.com/eddyryansyah/breast-cancer-mlops-pipeline       |
-| Docker Hub Image          | https://hub.docker.com/r/eddyryansyah/breast-cancer-mlops-pipeline |
-| DagsHub / MLflow Tracking | https://dagshub.com/eddyryansyah/breast-cancer-mlops-pipeline      |
-| Live Demo                 | Coming soon on Hugging Face Spaces                                 |
+| Resource                  | Link                                                                |
+| ------------------------- | ------------------------------------------------------------------- |
+| GitHub Repository         | https://github.com/eddyryansyah/breast-cancer-mlops-pipeline        |
+| Docker Hub Image          | https://hub.docker.com/r/eddyryansyah/breast-cancer-mlops-pipeline  |
+| DagsHub / MLflow Tracking | https://dagshub.com/eddyryansyah/breast-cancer-mlops-pipeline       |
+| Live Demo                 | https://huggingface.co/spaces/eddyryansyah/breast-cancer-mlops-demo |
 
 ## Project Overview
 
@@ -42,7 +42,7 @@ This repository contains an end-to-end MLOps workflow for breast cancer tumor cl
 
 The machine learning component predicts whether a tumor sample is benign or malignant based on numerical cell nucleus features. These features are not symptom inputs. They are structured numerical measurements from the dataset.
 
-The public-facing demo is planned to have two parts:
+The public-facing demo has two parts:
 
 1. **Symptom awareness guidance**
    - Users answer simple awareness questions about unusual breast changes.
@@ -96,6 +96,7 @@ Hugging Face Public Demo
 .
 ├── .github/
 │   └── workflows/              # GitHub Actions CI/CD workflow
+├── app/                        # Hugging Face Gradio demo application
 ├── data/
 │   ├── raw/                    # Original dataset
 │   └── processed/              # Preprocessed dataset
@@ -112,9 +113,13 @@ Hugging Face Public Demo
 
 ## Dataset
 
-This project uses the Breast Cancer Wisconsin Diagnostic dataset.
+This project uses the [Breast Cancer Wisconsin Diagnostic dataset](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_breast_cancer.html), accessed through scikit-learn's `load_breast_cancer` utility.
 
-The dataset is stored in two forms:
+The dataset is originally available from the [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/17/breast%2Bcancer%2Bwisconsin%2Bdiagnostic).
+
+The dataset contains numerical measurements computed from digitized images of breast mass samples and is used to classify tumor samples as either malignant or benign.
+
+The dataset is stored in this repository in two forms:
 
 | Dataset           | Path                                             |
 | ----------------- | ------------------------------------------------ |
@@ -131,7 +136,7 @@ preprocessing/
 
 ## Awareness Concept
 
-The planned live demo will include a breast health awareness section.
+The live demo includes a breast health awareness section.
 
 This section is not a diagnostic tool. It is designed to encourage users to seek medical consultation when they notice unusual breast changes, such as:
 
@@ -215,7 +220,7 @@ MLflow is used to track:
 - Input example
 - Model signature
 
-The remote MLflow tracking project is planned to use the following DagsHub repository:
+The remote MLflow tracking project is available through the following DagsHub repository:
 
 ```text
 https://dagshub.com/eddyryansyah/breast-cancer-mlops-pipeline
@@ -328,11 +333,15 @@ docs/images/monitoring/
 
 <img src="docs/images/monitoring/grafana-alert-rules.jpg" alt="Grafana Alert Rules" width="800">
 
-## Live Demo Plan
+## Live Demo
 
-A live demo will be deployed using Hugging Face Spaces.
+The live demo is available on Hugging Face Spaces:
 
-Planned demo sections:
+```text
+https://huggingface.co/spaces/eddyryansyah/breast-cancer-mlops-demo
+```
+
+Demo sections:
 
 ### 1. Breast Health Awareness
 
@@ -345,7 +354,7 @@ Users select sample tumor records from the dataset. The model predicts:
 - Benign
 - Malignant
 
-The demo will also show prediction confidence and explain that the model works on numerical tumor features, not personal symptoms.
+The demo shows prediction confidence and explains that the model works on numerical tumor features, not personal symptoms.
 
 ## Responsible Use
 
