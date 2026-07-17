@@ -368,7 +368,7 @@ The system should not be used as a substitute for professional medical examinati
 
 Developed by:
 
-**Eddy Ryansyah**
+**Eddy Ryansyah**<br>
 GitHub: [@eddyryansyah](https://github.com/eddyryansyah)
 
 ## License
