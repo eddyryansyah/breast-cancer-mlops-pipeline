@@ -53,13 +53,13 @@ def main():
 
     parser.add_argument(
         "--input",
-        default="breast_cancer_raw.csv",
+        default="data/raw/breast_cancer_raw.csv",
         help="Path menuju dataset raw."
     )
 
     parser.add_argument(
         "--output",
-        default="preprocessing/breast_cancer_preprocessing.csv",
+        default="data/processed/breast_cancer_preprocessing.csv",
         help="Path output dataset hasil preprocessing."
     )
 
