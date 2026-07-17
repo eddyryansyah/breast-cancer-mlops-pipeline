@@ -8,7 +8,8 @@ app_file: app.py
 python_version: 3.12.7
 pinned: false
 license: mit
-short_description: Awareness-oriented demo for breast cancer tumor classification.
+short_description: Breast cancer awareness ML demo.
+sdk_version: 6.19.0
 ---
 
 # Breast Cancer Awareness and Tumor Classification
