@@ -56,7 +56,7 @@ def train_model(df: pd.DataFrame):
 
 
 def main():
-    dataset_path = "breast_cancer_preprocessing.csv"
+    dataset_path = "data/processed/breast_cancer_preprocessing.csv"
 
     mlflow.set_experiment("Breast Cancer Classification")
 

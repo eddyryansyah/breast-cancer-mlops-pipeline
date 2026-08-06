@@ -152,12 +152,12 @@ def save_artifacts(model, X_test, y_test, y_pred, fpr, tpr, artifact_dir: str):
 
 
 def main():
-    dataset_path = "breast_cancer_preprocessing.csv"
+    dataset_path = "data/processed/breast_cancer_preprocessing.csv"
     artifact_dir = "artifacts"
 
     dagshub.init(
         repo_owner="eddyryansyah",
-        repo_name="SMSML_Eddy-ryansyah",
+        repo_name="breast-cancer-mlops-pipeline",
         mlflow=True,
     )
 
@@ -232,7 +232,7 @@ def main():
         print(f"{artifact_name}: {artifact_file}")
 
     print("\nDagsHub repository:")
-    print("https://dagshub.com/eddyryansyah/SMSML_Eddy-ryansyah")
+    print("https://dagshub.com/eddyryansyah/breast-cancer-mlops-pipeline")
 
 
 if __name__ == "__main__":
