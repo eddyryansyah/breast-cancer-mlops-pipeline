@@ -5,7 +5,8 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - ./2.prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-storage:/prometheus
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
 
@@ -18,6 +19,9 @@ services:
       - prometheus
     volumes:
       - grafana-storage:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
 
 volumes:
+  prometheus-storage:
   grafana-storage:

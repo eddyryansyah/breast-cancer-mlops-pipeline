@@ -56,7 +56,7 @@ def main():
     parser.add_argument(
         "--dataset-path",
         type=str,
-        default="../Membangun_model/breast_cancer_preprocessing.csv",
+        default="data/processed/breast_cancer_preprocessing.csv",
         help="Path dataset hasil preprocessing.",
     )
 
