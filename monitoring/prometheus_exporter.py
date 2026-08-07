@@ -8,10 +8,14 @@ from prometheus_client import Counter, Gauge, Histogram, start_http_server
 
 
 MODEL_URL = "http://127.0.0.1:5001/invocations"
-DATASET_PATH = "../Membangun_model/breast_cancer_preprocessing.csv"
+DATASET_PATH = "data/processed/breast_cancer_preprocessing.csv"
 EXPORTER_PORT = 8000
 REQUEST_INTERVAL_SECONDS = 2
 SAMPLE_LIMIT = 10
+SHUFFLE_RANDOM_STATE = 42
+
+_dataset_cache = None
+_batch_cursor = 0
 
 
 inference_requests_total = Counter(
@@ -86,17 +90,53 @@ last_request_timestamp = Gauge(
 
 
 def load_sample() -> pd.DataFrame:
-    dataset_file = Path(DATASET_PATH)
+    global _dataset_cache, _batch_cursor
 
-    if not dataset_file.exists():
-        raise FileNotFoundError(f"Dataset tidak ditemukan: {dataset_file}")
+    if _dataset_cache is None:
+        dataset_file = Path(DATASET_PATH)
 
-    df = pd.read_csv(dataset_file)
+        if not dataset_file.exists():
+            raise FileNotFoundError(f"Dataset tidak ditemukan: {dataset_file}")
 
-    if "target" in df.columns:
-        df = df.drop(columns=["target"])
+        df = pd.read_csv(dataset_file)
 
-    return df.head(SAMPLE_LIMIT)
+        if "target" in df.columns:
+            df = df.drop(columns=["target"])
+
+        _dataset_cache = (
+            df.sample(frac=1, random_state=SHUFFLE_RANDOM_STATE)
+            .reset_index(drop=True)
+        )
+
+    dataset_size = len(_dataset_cache)
+
+    if dataset_size == 0:
+        raise ValueError("Dataset kosong.")
+
+    if SAMPLE_LIMIT > dataset_size:
+        raise ValueError(
+            f"SAMPLE_LIMIT ({SAMPLE_LIMIT}) lebih besar dari jumlah data "
+            f"({dataset_size})."
+        )
+
+    start = _batch_cursor
+    end = start + SAMPLE_LIMIT
+
+    if end <= dataset_size:
+        sample_df = _dataset_cache.iloc[start:end]
+    else:
+        remaining = end - dataset_size
+        sample_df = pd.concat(
+            [
+                _dataset_cache.iloc[start:],
+                _dataset_cache.iloc[:remaining],
+            ],
+            ignore_index=True,
+        )
+
+    _batch_cursor = end % dataset_size
+
+    return sample_df.reset_index(drop=True)
 
 
 def send_prediction_request(sample_df: pd.DataFrame):
