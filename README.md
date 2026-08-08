@@ -190,6 +190,32 @@ Current validation metrics:
 | Recall    | 0.9722 |
 | F1-score  | 0.9655 |
 
+### Model Source of Truth
+
+The repository separates experimentation from the production training pipeline.
+
+- `training/modelling.py` is used for baseline model experimentation and MLflow autologging.
+- `training/modelling_tuning.py` is used for hyperparameter tuning and experiment tracking.
+- `mlproject/modelling.py` is the production training entry point used by the MLflow Project and GitHub Actions workflow.
+- The MLflow model logged under the `model` artifact path is the canonical model artifact used to build the model-serving Docker image.
+- `model.joblib` is stored as a supplementary training artifact and is not used as the deployment source.
+
+The production model lifecycle is:
+
+```text
+data/processed/breast_cancer_preprocessing.csv
+        ↓
+mlproject/modelling.py
+        ↓
+MLflow model artifact (`model`)
+        ↓
+MLflow Docker build
+        ↓
+Model-serving Docker image
+        ↓
+Inference and monitoring
+```
+
 ## Running the MLflow Project Locally
 
 Install dependencies:
@@ -220,7 +246,7 @@ MLflow is used to track:
 - Input example
 - Model signature
 
-The remote MLflow tracking project is available through the following DagsHub repository:
+The hyperparameter-tuning workflow in `training/modelling_tuning.py` logs experiment results to the following DagsHub repository:
 
 ```text
 https://dagshub.com/eddyryansyah/breast-cancer-mlops-pipeline
