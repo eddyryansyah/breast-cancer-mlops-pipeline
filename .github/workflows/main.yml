@@ -37,8 +37,14 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      packages: write
+
     env:
       DOCKER_IMAGE_NAME: breast-cancer-mlops-pipeline
+      GHCR_REGISTRY: ghcr.io
+      GHCR_IMAGE_NAME: ${{ github.repository }}
 
     steps:
       - name: Checkout repository
@@ -93,12 +99,30 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Tag Docker image
+      - name: Tag Docker Hub image
         if: github.event_name != 'pull_request'
         run: |
           docker tag "$DOCKER_IMAGE_NAME:latest" "${{ secrets.DOCKERHUB_USERNAME }}/$DOCKER_IMAGE_NAME:latest"
 
-      - name: Push Docker image to Docker Hub
+      - name: Push Docker Hub image
         if: github.event_name != 'pull_request'
         run: |
           docker push "${{ secrets.DOCKERHUB_USERNAME }}/$DOCKER_IMAGE_NAME:latest"
+
+      - name: Login to GitHub Container Registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v4
+        with:
+          registry: ${{ env.GHCR_REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Tag GHCR image
+        if: github.event_name != 'pull_request'
+        run: |
+          docker tag "$DOCKER_IMAGE_NAME:latest" "$GHCR_REGISTRY/$GHCR_IMAGE_NAME:latest"
+
+      - name: Push GHCR image
+        if: github.event_name != 'pull_request'
+        run: |
+          docker push "$GHCR_REGISTRY/$GHCR_IMAGE_NAME:latest"
