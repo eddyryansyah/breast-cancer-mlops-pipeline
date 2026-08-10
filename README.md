@@ -33,6 +33,7 @@ If users notice unusual breast changes, they should consult a qualified healthca
 | ------------------------- | ------------------------------------------------------------------- |
 | GitHub Repository         | https://github.com/eddyryansyah/breast-cancer-mlops-pipeline        |
 | Docker Hub Image          | https://hub.docker.com/r/eddyryansyah/breast-cancer-mlops-pipeline  |
+| GHCR Image                | `ghcr.io/eddyryansyah/breast-cancer-mlops-pipeline:latest` |
 | DagsHub / MLflow Tracking | https://dagshub.com/eddyryansyah/breast-cancer-mlops-pipeline       |
 | Live Demo                 | https://huggingface.co/spaces/eddyryansyah/breast-cancer-mlops-demo |
 
@@ -283,22 +284,41 @@ The workflow performs the following steps:
 5. Finds the logged MLflow model artifact.
 6. Uploads MLflow artifacts.
 7. Builds a Docker image using MLflow.
-8. Pushes the Docker image to Docker Hub on non-pull-request events.
+8. Pushes the Docker image to Docker Hub and GitHub Container Registry (GHCR) on non-pull-request events.
 
 This ensures the project can be trained and packaged automatically through GitHub Actions.
 
 ## Docker Image
 
-The model serving image is published to Docker Hub:
+The model serving image is published to both GitHub Container Registry (GHCR) and Docker Hub.
+
+GHCR:
 
 ```text
-eddyryansyah/breast-cancer-mlops-pipeline
+ghcr.io/eddyryansyah/breast-cancer-mlops-pipeline:latest
 ```
 
 Docker Hub:
 
 ```text
+eddyryansyah/breast-cancer-mlops-pipeline:latest
+```
+
+Docker Hub page:
+
+```text
 https://hub.docker.com/r/eddyryansyah/breast-cancer-mlops-pipeline
+```
+
+To run the GHCR image as the model-serving container:
+
+```bash
+docker pull ghcr.io/eddyryansyah/breast-cancer-mlops-pipeline:latest
+
+docker run -d \
+  --name breast-cancer-serving \
+  -p 5001:8080 \
+  ghcr.io/eddyryansyah/breast-cancer-mlops-pipeline:latest
 ```
 
 The image is produced through the GitHub Actions workflow using MLflow Docker build.
