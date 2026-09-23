@@ -5,7 +5,7 @@ colorFrom: pink
 colorTo: blue
 sdk: gradio
 app_file: app.py
-python_version: 3.12.7
+python_version: 3.12.14
 pinned: false
 license: mit
 short_description: Breast cancer awareness ML demo.

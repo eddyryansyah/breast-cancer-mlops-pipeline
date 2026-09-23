@@ -11,16 +11,16 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Set up Python 3.12.7
+      - name: Set up Python 3.12.14
         uses: actions/setup-python@v6
         with:
-          python-version: "3.12.7"
+          python-version: "3.12.14"
 
       - name: Install test dependencies
         run: |
@@ -35,7 +35,7 @@ jobs:
 
   train-and-build-docker:
     needs: test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     permissions:
       contents: read
@@ -45,20 +45,22 @@ jobs:
       DOCKER_IMAGE_NAME: breast-cancer-mlops-pipeline
       GHCR_REGISTRY: ghcr.io
       GHCR_IMAGE_NAME: ${{ github.repository }}
+      HF_SPACE_REPO: eddyryansyah/breast-cancer-mlops-demo
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Set up Python 3.12.7
+      - name: Set up Python 3.12.14
         uses: actions/setup-python@v6
         with:
-          python-version: "3.12.7"
+          python-version: "3.12.14"
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r mlproject/requirements.txt
+          pip install huggingface_hub
 
       - name: Run MLflow Project
         run: |
@@ -76,6 +78,19 @@ jobs:
 
           echo "MODEL_PATH=$MODEL_PATH" >> $GITHUB_ENV
           echo "Found model path: $MODEL_PATH"
+
+      - name: Prepare Hugging Face Space files
+        run: |
+          rm -rf hf_space_deploy
+          mkdir -p hf_space_deploy/data/processed
+
+          cp app/app.py hf_space_deploy/app.py
+          cp app/requirements.txt hf_space_deploy/requirements.txt
+          cp app/README.md hf_space_deploy/README.md
+          cp data/processed/breast_cancer_preprocessing.csv hf_space_deploy/data/processed/breast_cancer_preprocessing.csv
+          cp -R "$MODEL_PATH" hf_space_deploy/model
+
+          find hf_space_deploy -maxdepth 3 -type f -print
 
       - name: Upload MLflow artifacts
         uses: actions/upload-artifact@v6
@@ -126,3 +141,12 @@ jobs:
         if: github.event_name != 'pull_request'
         run: |
           docker push "$GHCR_REGISTRY/$GHCR_IMAGE_NAME:latest"
+
+      - name: Deploy to Hugging Face Space
+        if: github.event_name != 'pull_request'
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          hf upload "$HF_SPACE_REPO" hf_space_deploy . \
+            --repo-type space \
+            --commit-message "Deploy canonical MLflow model from GitHub Actions"

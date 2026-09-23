@@ -1,7 +1,7 @@
 # Breast Cancer MLOps Pipeline
 
 [![MLOps Pipeline CI](https://github.com/eddyryansyah/breast-cancer-mlops-pipeline/actions/workflows/main.yml/badge.svg)](https://github.com/eddyryansyah/breast-cancer-mlops-pipeline/actions/workflows/main.yml)
-[![Python](https://img.shields.io/badge/Python-3.12.7-blue)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/Python-3.12.14-blue)](https://www.python.org/)
 [![MLflow](https://img.shields.io/badge/MLflow-2.19.0-blue)](https://mlflow.org/)
 [![Docker](https://img.shields.io/badge/Docker-Model%20Serving-blue)](https://www.docker.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -80,7 +80,7 @@ Hugging Face Public Demo
 
 ## Tech Stack
 
-- Python 3.12.7
+- Python 3.12.14
 - pandas
 - NumPy
 - scikit-learn
@@ -278,7 +278,7 @@ The CI/CD workflow is defined in:
 The workflow performs the following steps:
 
 1. Checks out the repository.
-2. Sets up Python 3.12.7.
+2. Sets up Python 3.12.14.
 3. Installs MLflow project dependencies.
 4. Runs the MLflow Project.
 5. Finds the logged MLflow model artifact.
