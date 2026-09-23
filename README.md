@@ -8,7 +8,7 @@
 
 An end-to-end Machine Learning Operations (MLOps) project for breast cancer awareness and tumor classification. This project combines a public-facing health awareness concept with a machine learning pipeline built using the Breast Cancer Wisconsin Diagnostic dataset.
 
-The project demonstrates data preprocessing, model training, MLflow experiment tracking, CI/CD automation with GitHub Actions, Docker-based model serving, and monitoring with Prometheus and Grafana.
+The project demonstrates data preprocessing, automated testing, production model training, MLflow experiment tracking, CI/CD automation with GitHub Actions, container publishing to Docker Hub and GHCR, Docker-based model serving, monitoring with Prometheus and Grafana, and automated Live Demo deployment to Hugging Face Spaces.
 
 ## Purpose
 
@@ -29,13 +29,13 @@ If users notice unusual breast changes, they should consult a qualified healthca
 
 ## Project Links
 
-| Resource                  | Link                                                                |
-| ------------------------- | ------------------------------------------------------------------- |
-| GitHub Repository         | https://github.com/eddyryansyah/breast-cancer-mlops-pipeline        |
-| Docker Hub Image          | https://hub.docker.com/r/eddyryansyah/breast-cancer-mlops-pipeline  |
-| GHCR Image                | `ghcr.io/eddyryansyah/breast-cancer-mlops-pipeline:latest` |
-| DagsHub / MLflow Tracking | https://dagshub.com/eddyryansyah/breast-cancer-mlops-pipeline       |
-| Live Demo                 | https://huggingface.co/spaces/eddyryansyah/breast-cancer-mlops-demo |
+| Resource                  | Link                                                                                                     |
+| ------------------------- | -------------------------------------------------------------------------------------------------------- |
+| GitHub Repository         | https://github.com/eddyryansyah/breast-cancer-mlops-pipeline                                             |
+| Docker Hub Image          | https://hub.docker.com/r/eddyryansyah/breast-cancer-mlops-pipeline                                       |
+| GHCR Image                | https://github.com/eddyryansyah/breast-cancer-mlops-pipeline/pkgs/container/breast-cancer-mlops-pipeline |
+| DagsHub / MLflow Tracking | https://dagshub.com/eddyryansyah/breast-cancer-mlops-pipeline                                            |
+| Live Demo                 | https://huggingface.co/spaces/eddyryansyah/breast-cancer-mlops-demo                                      |
 
 ## Project Overview
 
@@ -63,19 +63,24 @@ Preprocessing Pipeline
     ↓
 Processed Dataset
     ↓
-Model Training
-    ↓
-MLflow Experiment Tracking
-    ↓
 GitHub Actions CI/CD
     ↓
-Docker Image Build
+Automated Tests
     ↓
-Model Serving
+Production Model Training
     ↓
-Prometheus + Grafana Monitoring
-    ↓
-Hugging Face Public Demo
+MLflow Tracking + Canonical Model Artifact
+    ├──→ MLflow Docker Build
+    │        ↓
+    │    Docker Hub + GHCR
+    │        ↓
+    │    Model Serving
+    │        ↓
+    │    Prometheus + Grafana Monitoring
+    │
+    └──→ Hugging Face Space Deployment
+             ↓
+         Live Demo
 ```
 
 ## Tech Stack
@@ -87,6 +92,8 @@ Hugging Face Public Demo
 - MLflow
 - GitHub Actions
 - Docker
+- Docker Hub
+- GitHub Container Registry (GHCR)
 - Prometheus
 - Grafana
 - Hugging Face Spaces
@@ -96,17 +103,18 @@ Hugging Face Public Demo
 ```text
 .
 ├── .github/
-│   └── workflows/              # GitHub Actions CI/CD workflow
+│   └── workflows/              # CI/CD, testing, container publishing, and deployment
 ├── app/                        # Hugging Face Gradio demo application
 ├── data/
 │   ├── raw/                    # Original dataset
 │   └── processed/              # Preprocessed dataset
 ├── docs/
 │   └── images/                 # MLflow and monitoring evidence
-├── mlproject/                  # MLflow Project for automated training
+├── mlproject/                  # Production MLflow Project and model training
 ├── monitoring/                 # Prometheus and Grafana monitoring setup
 ├── preprocessing/              # Data preprocessing notebook and script
-├── training/                   # Model training and tuning scripts
+├── tests/                      # Automated test suite
+├── training/                   # Baseline training and model tuning scripts
 ├── .python-version             # Python version configuration
 ├── LICENSE
 └── README.md
@@ -198,7 +206,9 @@ The repository separates experimentation from the production training pipeline.
 - `training/modelling.py` is used for baseline model experimentation and MLflow autologging.
 - `training/modelling_tuning.py` is used for hyperparameter tuning and experiment tracking.
 - `mlproject/modelling.py` is the production training entry point used by the MLflow Project and GitHub Actions workflow.
-- The MLflow model logged under the `model` artifact path is the canonical model artifact used to build the model-serving Docker image.
+- The MLflow model logged under the `model` artifact path is the canonical model artifact used for production deployment.
+- The same canonical MLflow model artifact is used to build the model-serving Docker image and is deployed to the Hugging Face Space.
+- The Hugging Face Live Demo loads the deployed artifact using `mlflow.sklearn.load_model()` and does not retrain a separate model.
 - `model.joblib` is stored as a supplementary training artifact and is not used as the deployment source.
 
 The production model lifecycle is:
@@ -206,15 +216,22 @@ The production model lifecycle is:
 ```text
 data/processed/breast_cancer_preprocessing.csv
         ↓
+GitHub Actions CI/CD
+        ↓
 mlproject/modelling.py
         ↓
 MLflow model artifact (`model`)
-        ↓
-MLflow Docker build
-        ↓
-Model-serving Docker image
-        ↓
-Inference and monitoring
+        ├──→ MLflow Docker build
+        │        ↓
+        │    Docker Hub + GHCR
+        │        ↓
+        │    Model serving
+        │        ↓
+        │    Inference and monitoring
+        │
+        └──→ Hugging Face Space deployment
+                 ↓
+             Live Demo
 ```
 
 ## Running the MLflow Project Locally
@@ -277,16 +294,18 @@ The CI/CD workflow is defined in:
 
 The workflow performs the following steps:
 
-1. Checks out the repository.
-2. Sets up Python 3.12.14.
-3. Installs MLflow project dependencies.
-4. Runs the MLflow Project.
-5. Finds the logged MLflow model artifact.
-6. Uploads MLflow artifacts.
-7. Builds a Docker image using MLflow.
-8. Pushes the Docker image to Docker Hub and GitHub Container Registry (GHCR) on non-pull-request events.
+1. Runs the automated test suite before the production training job.
+2. Sets up Python 3.12.14 for the production pipeline.
+3. Installs the MLflow project and deployment dependencies.
+4. Runs the MLflow Project to train the production model.
+5. Finds the canonical MLflow model artifact.
+6. Prepares the Hugging Face Space deployment files using the same canonical model artifact.
+7. Uploads the MLflow training artifacts as GitHub Actions artifacts.
+8. Builds the model-serving Docker image from the canonical MLflow model.
+9. Pushes the Docker image to Docker Hub and GitHub Container Registry (GHCR) on non-pull-request events.
+10. Deploys the canonical MLflow model and Live Demo files to Hugging Face Spaces on non-pull-request events.
 
-This ensures the project can be trained and packaged automatically through GitHub Actions.
+Pull request workflows validate testing, training, model packaging, and deployment preparation without publishing containers or modifying the public Hugging Face Space. After changes reach `main`, the workflow publishes the production container images and deploys the Live Demo automatically.
 
 ## Docker Image
 
@@ -387,6 +406,10 @@ The live demo is available on Hugging Face Spaces:
 https://huggingface.co/spaces/eddyryansyah/breast-cancer-mlops-demo
 ```
 
+The Live Demo uses the canonical MLflow model artifact produced by the production training pipeline. The same model artifact is used to build the production Docker image and is automatically deployed to Hugging Face Spaces through GitHub Actions.
+
+The application loads the deployed model using `mlflow.sklearn.load_model()` and does not perform separate model training at application startup.
+
 Demo sections:
 
 ### 1. Breast Health Awareness
@@ -395,12 +418,12 @@ Users answer simple awareness questions about unusual breast changes. The system
 
 ### 2. ML Classification Demo
 
-Users select sample tumor records from the dataset. The model predicts:
+Users select sample tumor records from the processed dataset. The canonical MLflow model predicts:
 
 - Benign
 - Malignant
 
-The demo shows prediction confidence and explains that the model works on numerical tumor features, not personal symptoms.
+The demo displays prediction confidence and explains that the model works on numerical tumor features, not personal symptoms.
 
 ## Responsible Use
 
