@@ -2,15 +2,10 @@ from functools import lru_cache
 from pathlib import Path
 
 import gradio as gr
+import mlflow.sklearn
 import numpy as np
 import pandas as pd
 from sklearn.datasets import load_breast_cancer
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
-from sklearn.model_selection import train_test_split
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler
-
 
 TARGET_LABELS = {
     0: "Malignant",
@@ -26,10 +21,8 @@ SYMPTOM_CHOICES = [
     "Changes in nipple shape, position, or appearance",
 ]
 
-
 def normalize_column_name(column_name: str) -> str:
     return column_name.strip().lower().replace(" ", "_")
-
 
 def get_project_root() -> Path:
     current_file = Path(__file__).resolve()
@@ -39,7 +32,6 @@ def get_project_root() -> Path:
         return app_dir.parent
 
     return app_dir
-
 
 def load_processed_dataset() -> tuple[pd.DataFrame, str]:
     project_root = get_project_root()
@@ -55,59 +47,31 @@ def load_processed_dataset() -> tuple[pd.DataFrame, str]:
 
     return df, "scikit-learn dataset fallback"
 
-
 @lru_cache(maxsize=1)
-def train_demo_model():
+def load_demo_bundle():
     df, dataset_source = load_processed_dataset()
 
     if "target" not in df.columns:
         raise ValueError("Dataset must contain a 'target' column.")
 
-    X = df.drop(columns=["target"])
-    y = df["target"].astype(int)
+    feature_columns = [column for column in df.columns if column != "target"]
 
-    X_train, X_test, y_train, y_test = train_test_split(
-        X,
-        y,
-        test_size=0.2,
-        random_state=42,
-        stratify=y,
-    )
+    model_path = Path(__file__).resolve().parent / "model"
 
-    model_pipeline = Pipeline(
-        steps=[
-            ("scaler", StandardScaler()),
-            (
-                "model",
-                RandomForestClassifier(
-                    n_estimators=200,
-                    max_depth=5,
-                    min_samples_split=2,
-                    min_samples_leaf=2,
-                    random_state=42,
-                ),
-            ),
-        ]
-    )
+    if not model_path.exists():
+        raise FileNotFoundError(
+            f"MLflow model artifact not found: {model_path}. "
+            "The canonical model directory must be deployed with the app."
+        )
 
-    model_pipeline.fit(X_train, y_train)
-    y_pred = model_pipeline.predict(X_test)
-
-    metrics = {
-        "Accuracy": accuracy_score(y_test, y_pred),
-        "Precision": precision_score(y_test, y_pred),
-        "Recall": recall_score(y_test, y_pred),
-        "F1-score": f1_score(y_test, y_pred),
-    }
+    model = mlflow.sklearn.load_model(str(model_path))
 
     return {
-        "model": model_pipeline,
+        "model": model,
         "df": df,
-        "feature_columns": list(X.columns),
+        "feature_columns": feature_columns,
         "dataset_source": dataset_source,
-        "metrics": metrics,
     }
-
 
 def assess_symptoms(selected_symptoms: list[str]) -> str:
     selected_count = len(selected_symptoms or [])
@@ -141,9 +105,8 @@ def assess_symptoms(selected_symptoms: list[str]) -> str:
         "**Important:** This section does not provide a diagnosis and does not calculate cancer probability."
     )
 
-
 def predict_sample(sample_index: int):
-    bundle = train_demo_model()
+    bundle = load_demo_bundle()
     model = bundle["model"]
     df = bundle["df"]
     feature_columns = bundle["feature_columns"]
@@ -183,14 +146,8 @@ def predict_sample(sample_index: int):
 
     return result_markdown, probability_output, feature_table
 
-
 def get_model_summary() -> str:
-    bundle = train_demo_model()
-    metrics = bundle["metrics"]
-
-    metrics_text = "\n".join(
-        [f"- **{metric_name}:** {metric_value:.4f}" for metric_name, metric_value in metrics.items()]
-    )
+    bundle = load_demo_bundle()
 
     return (
         "### Demo Model Summary\n\n"
@@ -198,20 +155,17 @@ def get_model_summary() -> str:
         f"- **Samples:** {len(bundle['df'])}\n"
         f"- **Features:** {len(bundle['feature_columns'])}\n"
         "- **Model:** Random Forest Classifier with StandardScaler pipeline\n"
+        "- **Model source:** Canonical MLflow model artifact deployed by the production pipeline\n"
         "- **Target mapping:** `0 = Malignant`, `1 = Benign`\n\n"
-        "**Validation metrics:**\n\n"
-        f"{metrics_text}\n\n"
-        "The model is trained at app startup using the same core training configuration as the MLflow project."
+        "The model is loaded from the same canonical MLflow artifact used by the production deployment. "
+        "No model training is performed by the Live Demo."
     )
 
-
-bundle = train_demo_model()
-MAX_SAMPLE_INDEX = len(bundle["df"]) - 1
-
+demo_df, _ = load_processed_dataset()
+MAX_SAMPLE_INDEX = len(demo_df) - 1
 
 with gr.Blocks(
     title="Breast Cancer Awareness and Tumor Classification",
-    theme=gr.themes.Soft(),
 ) as demo:
     gr.Markdown(
         """
@@ -288,6 +242,5 @@ Choose a dataset sample index. The model will classify the selected numerical tu
 """
     )
 
-
 if __name__ == "__main__":
-    demo.launch()
+    demo.launch(theme=gr.themes.Soft())
