@@ -21,3 +21,6 @@ mlruns/
 
 # VS Code local settings
 .vscode/
+
+# Local research workspaces / bulky MLflow E1 artifacts
+.research_artifacts/
