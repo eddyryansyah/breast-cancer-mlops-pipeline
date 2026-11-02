@@ -1,0 +1,82 @@
+{
+  "protocol": "v1.0.0-stratified-holdout-baseline",
+  "warning": "Single stratified 80/20 split: not a cross-validation or clinical validation.",
+  "dataset": {
+    "path": "data/processed/breast_cancer_preprocessing.csv",
+    "sha256": "9b9e3a2fe53a2264f7e756aff00ab883450186c47bfb2027b4d90ca51d23347d",
+    "rows": 569,
+    "feature_count": 30
+  },
+  "split": {
+    "method": "stratified train_test_split",
+    "test_size": 0.2,
+    "random_state": 42,
+    "train_rows": 455,
+    "test_rows": 114,
+    "train_class_counts": {
+      "0": 170,
+      "1": 285
+    },
+    "test_class_counts": {
+      "0": 42,
+      "1": 72
+    }
+  },
+  "environment": {
+    "python": "3.12.7",
+    "numpy": "2.5.1",
+    "pandas": "2.3.3",
+    "scikit_learn": "1.5.2"
+  },
+  "original_binary_metrics_positive_label": 1,
+  "original_binary_metrics_positive_class": "benign",
+  "original_binary_metrics": {
+    "accuracy": 0.956140350877193,
+    "precision": 0.958904109589041,
+    "recall": 0.9722222222222222,
+    "f1_score": 0.9655172413793104
+  },
+  "explicit_metrics": {
+    "label_mapping": {
+      "0": "malignant",
+      "1": "benign"
+    },
+    "accuracy": 0.956140350877193,
+    "balanced_accuracy": 0.9503968253968254,
+    "per_class": {
+      "malignant": {
+        "support": 42,
+        "precision": 0.9512195121951219,
+        "recall": 0.9285714285714286,
+        "f1_score": 0.9397590361445783
+      },
+      "benign": {
+        "support": 72,
+        "precision": 0.958904109589041,
+        "recall": 0.9722222222222222,
+        "f1_score": 0.9655172413793104
+      }
+    },
+    "confusion_matrix": {
+      "labels": [
+        "malignant",
+        "benign"
+      ],
+      "rows": "true labels",
+      "columns": "predicted labels",
+      "counts": [
+        [
+          39,
+          3
+        ],
+        [
+          2,
+          70
+        ]
+      ]
+    },
+    "malignant_false_negative_count": 3,
+    "malignant_false_negative_rate": 0.07142857142857142,
+    "malignant_roc_auc": 0.9933862433862434
+  }
+}
