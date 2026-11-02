@@ -1,0 +1,170 @@
+{
+  "protocol": "E1-isolated-workspaces-fixed-environment-v1",
+  "scope": "Repeat independent MLflow runs using copied source/data and the SAME installed Python environment; not clean dependency installs or clinical evaluation.",
+  "target_mapping": {
+    "0": "malignant",
+    "1": "benign"
+  },
+  "legacy_metrics_positive_class": "benign (label=1)",
+  "dataset": {
+    "path": "data/processed/breast_cancer_preprocessing.csv",
+    "sha256": "9b9e3a2fe53a2264f7e756aff00ab883450186c47bfb2027b4d90ca51d23347d",
+    "rows": 569,
+    "feature_count": 30
+  },
+  "source_sha256": {
+    "mlproject/MLproject": "ea6c562472f00b857eb8419fef75cb06f7bb76b9d9da84089bd46def9aed0ce7",
+    "mlproject/modelling.py": "c3b8948a1867349e6e531887f476a969658601583c3adffb626f51c5dc060ebc",
+    "mlproject/conda.yaml": "85bc29f3d1882cfe336a50cc95a698ffd0371e5649c83c3efea1896fa8aaf03e",
+    "mlproject/requirements.txt": "b7f0887b943e4408baaa2c6a5f752ee1ff5feb01a8fd0086b33ae2814da0f464"
+  },
+  "git_head": "55a503984d7803a796273ad3ff74062f0d9e4c70",
+  "environment": {
+    "python": "3.12.7",
+    "python_executable": ".venv/bin/python",
+    "platform": "macOS-26.5.1-arm64-arm-64bit",
+    "mlflow": "2.19.0",
+    "scikit_learn": "1.5.2",
+    "numpy": "2.5.1",
+    "pandas": "2.3.3",
+    "joblib": "1.5.3"
+  },
+  "requested_repeats": 5,
+  "artifact_directory": ".research_artifacts/e1/batch_20261102T112839Z_10e11d11",
+  "runs": [
+    {
+      "attempt": 1,
+      "status": "FINISHED",
+      "mlflow_run_id": "e89cf131e5f7419fb373212c29b0fba0",
+      "mlflow_project_python": ".venv/bin/python",
+      "metrics": {
+        "accuracy": 0.956140350877193,
+        "precision": 0.958904109589041,
+        "recall": 0.9722222222222222,
+        "f1_score": 0.9655172413793104
+      },
+      "model_pickle_sha256": "9c8eae1371e50141ee21cd46c5a2d515b9edbf1fded97a94d375d58a73050265",
+      "prediction_sha256": "8f2f3d1c2bb5a732e0592a6ff0dc79f634092b51fcfc6155481d0a23599ffb5f",
+      "predictions_checked": 569,
+      "feature_count": 30,
+      "model_artifact": ".research_artifacts/e1/batch_20261102T112839Z_10e11d11/run_01/mlruns/0/e89cf131e5f7419fb373212c29b0fba0/artifacts/model",
+      "duration_seconds": 7.5051
+    },
+    {
+      "attempt": 2,
+      "status": "FINISHED",
+      "mlflow_run_id": "1915570248f84355a47dc37c7a682eb0",
+      "mlflow_project_python": ".venv/bin/python",
+      "metrics": {
+        "accuracy": 0.956140350877193,
+        "precision": 0.958904109589041,
+        "recall": 0.9722222222222222,
+        "f1_score": 0.9655172413793104
+      },
+      "model_pickle_sha256": "9c8eae1371e50141ee21cd46c5a2d515b9edbf1fded97a94d375d58a73050265",
+      "prediction_sha256": "8f2f3d1c2bb5a732e0592a6ff0dc79f634092b51fcfc6155481d0a23599ffb5f",
+      "predictions_checked": 569,
+      "feature_count": 30,
+      "model_artifact": ".research_artifacts/e1/batch_20261102T112839Z_10e11d11/run_02/mlruns/0/1915570248f84355a47dc37c7a682eb0/artifacts/model",
+      "duration_seconds": 6.7187
+    },
+    {
+      "attempt": 3,
+      "status": "FINISHED",
+      "mlflow_run_id": "457791ecc9404e9383d16c196c2591d3",
+      "mlflow_project_python": ".venv/bin/python",
+      "metrics": {
+        "accuracy": 0.956140350877193,
+        "precision": 0.958904109589041,
+        "recall": 0.9722222222222222,
+        "f1_score": 0.9655172413793104
+      },
+      "model_pickle_sha256": "9c8eae1371e50141ee21cd46c5a2d515b9edbf1fded97a94d375d58a73050265",
+      "prediction_sha256": "8f2f3d1c2bb5a732e0592a6ff0dc79f634092b51fcfc6155481d0a23599ffb5f",
+      "predictions_checked": 569,
+      "feature_count": 30,
+      "model_artifact": ".research_artifacts/e1/batch_20261102T112839Z_10e11d11/run_03/mlruns/0/457791ecc9404e9383d16c196c2591d3/artifacts/model",
+      "duration_seconds": 5.7846
+    },
+    {
+      "attempt": 4,
+      "status": "FINISHED",
+      "mlflow_run_id": "14ae1be0d4574342b4f1ee29b7abcd52",
+      "mlflow_project_python": ".venv/bin/python",
+      "metrics": {
+        "accuracy": 0.956140350877193,
+        "precision": 0.958904109589041,
+        "recall": 0.9722222222222222,
+        "f1_score": 0.9655172413793104
+      },
+      "model_pickle_sha256": "9c8eae1371e50141ee21cd46c5a2d515b9edbf1fded97a94d375d58a73050265",
+      "prediction_sha256": "8f2f3d1c2bb5a732e0592a6ff0dc79f634092b51fcfc6155481d0a23599ffb5f",
+      "predictions_checked": 569,
+      "feature_count": 30,
+      "model_artifact": ".research_artifacts/e1/batch_20261102T112839Z_10e11d11/run_04/mlruns/0/14ae1be0d4574342b4f1ee29b7abcd52/artifacts/model",
+      "duration_seconds": 5.4182
+    },
+    {
+      "attempt": 5,
+      "status": "FINISHED",
+      "mlflow_run_id": "790e7c490f994a4fbc8ac05015e497a5",
+      "mlflow_project_python": ".venv/bin/python",
+      "metrics": {
+        "accuracy": 0.956140350877193,
+        "precision": 0.958904109589041,
+        "recall": 0.9722222222222222,
+        "f1_score": 0.9655172413793104
+      },
+      "model_pickle_sha256": "9c8eae1371e50141ee21cd46c5a2d515b9edbf1fded97a94d375d58a73050265",
+      "prediction_sha256": "8f2f3d1c2bb5a732e0592a6ff0dc79f634092b51fcfc6155481d0a23599ffb5f",
+      "predictions_checked": 569,
+      "feature_count": 30,
+      "model_artifact": ".research_artifacts/e1/batch_20261102T112839Z_10e11d11/run_05/mlruns/0/790e7c490f994a4fbc8ac05015e497a5/artifacts/model",
+      "duration_seconds": 5.4083
+    }
+  ],
+  "summary": {
+    "attempts": 5,
+    "requested_repeats": 5,
+    "successful_runs": 5,
+    "failed_runs": 0,
+    "all_successful": true,
+    "prediction_hashes_identical": true,
+    "model_pickle_hashes_identical": true,
+    "metrics": {
+      "accuracy": {
+        "min": 0.956140350877193,
+        "max": 0.956140350877193,
+        "range": 0.0,
+        "population_std": 0.0,
+        "observations": 5
+      },
+      "f1_score": {
+        "min": 0.9655172413793104,
+        "max": 0.9655172413793104,
+        "range": 0.0,
+        "population_std": 0.0,
+        "observations": 5
+      },
+      "precision": {
+        "min": 0.958904109589041,
+        "max": 0.958904109589041,
+        "range": 0.0,
+        "population_std": 0.0,
+        "observations": 5
+      },
+      "recall": {
+        "min": 0.9722222222222222,
+        "max": 0.9722222222222222,
+        "range": 0.0,
+        "population_std": 0.0,
+        "observations": 5
+      }
+    },
+    "duration_seconds": {
+      "min": 5.4083,
+      "max": 7.5051,
+      "mean": 6.16698
+    }
+  }
+}
