@@ -1,0 +1,187 @@
+{
+  "protocol": "E3-local-serving-reliability-and-recovery-v1",
+  "timestamp_utc": "2026-11-03T07:12:27.573680+00:00",
+  "scope": "One host and a dedicated localhost Docker container; no production traffic or clinical evaluation.",
+  "reference": {
+    "e1_run_id": "e89cf131e5f7419fb373212c29b0fba0",
+    "model_pickle_sha256": "9c8eae1371e50141ee21cd46c5a2d515b9edbf1fded97a94d375d58a73050265",
+    "dataset_sha256": "9b9e3a2fe53a2264f7e756aff00ab883450186c47bfb2027b4d90ca51d23347d",
+    "e2_docker_image_id": "sha256:56783f46aab5922cdf500cf0662acc0228011b3785ecceabd97edb09634a4273"
+  },
+  "environment": {
+    "platform": "macOS-26.5.1-arm64-arm-64bit",
+    "container": {
+      "name": "breast-cancer-e3-serving",
+      "image": "breast-cancer-e2:local",
+      "image_id": "sha256:56783f46aab5922cdf500cf0662acc0228011b3785ecceabd97edb09634a4273",
+      "host": "127.0.0.1",
+      "host_port": 5001,
+      "container_port": 8080
+    }
+  },
+  "settings": {
+    "url": "http://127.0.0.1:5001/invocations",
+    "valid_request_attempts": 50,
+    "restart_attempts": 3,
+    "restart_explicitly_enabled": true,
+    "readiness_timeout_seconds": 120,
+    "sample_count": 8,
+    "feature_count": 30
+  },
+  "valid_requests": {
+    "attempted": 50,
+    "succeeded": 50,
+    "errors": [],
+    "latencies_ms": [
+      12.756000272929668,
+      44.291042257100344,
+      11.096000205725431,
+      10.098457802087069,
+      51.42316734418273,
+      11.653250083327293,
+      11.990750208497047,
+      10.308084078133106,
+      25.639915838837624,
+      9.602915961295366,
+      9.502500295639038,
+      8.946999907493591,
+      8.36799992248416,
+      8.382832631468773,
+      9.326374623924494,
+      9.270834270864725,
+      9.113749954849482,
+      10.150209069252014,
+      8.824958931654692,
+      8.8702910579741,
+      8.863124996423721,
+      8.786915801465511,
+      8.523333352059126,
+      8.23783315718174,
+      8.443290833383799,
+      8.490624837577343,
+      8.504500146955252,
+      8.578457869589329,
+      8.36554216220975,
+      8.439750410616398,
+      8.278625085949898,
+      8.222542237490416,
+      9.823750238865614,
+      9.280167054384947,
+      8.834207896143198,
+      8.94716614857316,
+      7.912542205303907,
+      7.787500042468309,
+      7.6741669327020645,
+      7.790833245962858,
+      8.120458107441664,
+      7.756374776363373,
+      7.74120818823576,
+      8.626916911453009,
+      8.066417183727026,
+      9.377417154610157,
+      7.979166693985462,
+      9.080874733626842,
+      8.19704169407487,
+      8.634166792035103
+    ],
+    "summary_ms": {
+      "n": 50,
+      "min_ms": 7.6741669327020645,
+      "median_ms": 8.805937366560102,
+      "p95_ms": 19.84215383417901,
+      "max_ms": 51.42316734418273,
+      "mean_ms": 10.859625032171607,
+      "population_std_ms": 8.00846520677576
+    }
+  },
+  "invalid_requests": [
+    {
+      "name": "malformed_json",
+      "status_code": 400,
+      "rejected": true,
+      "client_error_4xx": true,
+      "server_error_5xx": false,
+      "healthy_after": true,
+      "valid_prediction_after": true
+    },
+    {
+      "name": "unsupported_root_array",
+      "status_code": 400,
+      "rejected": true,
+      "client_error_4xx": true,
+      "server_error_5xx": false,
+      "healthy_after": true,
+      "valid_prediction_after": true
+    },
+    {
+      "name": "missing_required_feature",
+      "status_code": 400,
+      "rejected": true,
+      "client_error_4xx": true,
+      "server_error_5xx": false,
+      "healthy_after": true,
+      "valid_prediction_after": true
+    },
+    {
+      "name": "inconsistent_row_length",
+      "status_code": 400,
+      "rejected": true,
+      "client_error_4xx": true,
+      "server_error_5xx": false,
+      "healthy_after": true,
+      "valid_prediction_after": true
+    },
+    {
+      "name": "nonnumeric_feature",
+      "status_code": 400,
+      "rejected": true,
+      "client_error_4xx": true,
+      "server_error_5xx": false,
+      "healthy_after": true,
+      "valid_prediction_after": true
+    }
+  ],
+  "recovery": [
+    {
+      "attempt": 1,
+      "status": "FINISHED",
+      "time_to_ready_seconds": 5.892312833108008,
+      "time_to_prediction_seconds": 5.944463666994125,
+      "prediction_parity": true
+    },
+    {
+      "attempt": 2,
+      "status": "FINISHED",
+      "time_to_ready_seconds": 6.309888500254601,
+      "time_to_prediction_seconds": 6.335819167084992,
+      "prediction_parity": true
+    },
+    {
+      "attempt": 3,
+      "status": "FINISHED",
+      "time_to_ready_seconds": 7.139121584128588,
+      "time_to_prediction_seconds": 7.171577250119299,
+      "prediction_parity": true
+    }
+  ],
+  "summary": {
+    "completed": true,
+    "valid_requests_succeeded": 50,
+    "valid_requests_attempted": 50,
+    "invalid_requests_rejected": 5,
+    "invalid_requests_attempted": 5,
+    "invalid_requests_all_4xx": true,
+    "invalid_requests_any_5xx": false,
+    "restarts_recovered": 3,
+    "restarts_requested": 3,
+    "recovery_ms": {
+      "n": 3,
+      "min_ms": 5944.463666994125,
+      "median_ms": 6335.819167084992,
+      "p95_ms": 7088.001441815868,
+      "max_ms": 7171.577250119299,
+      "mean_ms": 6483.953361399472,
+      "population_std_ms": 511.80057386738434
+    }
+  }
+}
