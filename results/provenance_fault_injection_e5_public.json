@@ -1,0 +1,598 @@
+{
+  "protocol": "E5-controlled-provenance-fault-injection-v0.1",
+  "timestamp_utc": "2026-11-03T09:55:21.845751+00:00",
+  "scope": "deterministic controlled local artifact/data fault detection; no model loading",
+  "pilot_is_exploratory": true,
+  "challenge_expected_decisions_frozen_before_real_run": true,
+  "reference": {
+    "canonical_run_id": "e89cf131e5f7419fb373212c29b0fba0",
+    "model_pickle_sha256": "9c8eae1371e50141ee21cd46c5a2d515b9edbf1fded97a94d375d58a73050265",
+    "dataset_sha256": "9b9e3a2fe53a2264f7e756aff00ab883450186c47bfb2027b4d90ca51d23347d",
+    "original_report_sha256": "4fa142de679dc7a0cddc570ccfde8c34c350e4a035efd823c034aaedc298aa95",
+    "original_mlmodel_sha256": "da23de0336749e7de567eef848c9840cd0675e4888c827b2bb753c698f3f76d8"
+  },
+  "environment": {
+    "python": "3.12.7",
+    "PyYAML": "6.0.3",
+    "mlflow": "2.19.0",
+    "scikit-learn": "1.5.2"
+  },
+  "control": {
+    "intact_source_and_positive_control_after_run": true,
+    "positive_control_files_sha256": {
+      "dataset.csv": "9b9e3a2fe53a2264f7e756aff00ab883450186c47bfb2027b4d90ca51d23347d",
+      "model/MLmodel": "da23de0336749e7de567eef848c9840cd0675e4888c827b2bb753c698f3f76d8",
+      "model/conda.yaml": "e642f6198d0bb9039331086cba083438b7ecdf713e7a5c1faad182b4f89a22df",
+      "model/input_example.json": "5691c58779cddf8a7cbede99e2658f09a84b651c1a0e637b26ff44c9cbc99e93",
+      "model/model.pkl": "9c8eae1371e50141ee21cd46c5a2d515b9edbf1fded97a94d375d58a73050265",
+      "model/python_env.yaml": "434c252fa8c47ff388ff8316a444d8ac98d832bef9bff038e14a4e4effe08b87",
+      "model/requirements.txt": "c4598a75709fd2a176dde9c8ed16dcc8487a3012986e85378b3c2548aca18dc3",
+      "model/serving_input_example.json": "87ca916f3908e2d5c1354d77463e5e105aaf8dc68a1a3741a2b235fcc7cb7860"
+    }
+  },
+  "cases": [
+    {
+      "case": "P0",
+      "suite": "exploratory_pilot_replication",
+      "description": "Intact artifact, metadata and dataset",
+      "scenario_directory": ".research_artifacts/e5/runs/initial_e1_evaluation/P0",
+      "changed_files": [],
+      "case_files_sha256": {
+        "dataset.csv": "9b9e3a2fe53a2264f7e756aff00ab883450186c47bfb2027b4d90ca51d23347d",
+        "model/MLmodel": "da23de0336749e7de567eef848c9840cd0675e4888c827b2bb753c698f3f76d8",
+        "model/conda.yaml": "e642f6198d0bb9039331086cba083438b7ecdf713e7a5c1faad182b4f89a22df",
+        "model/input_example.json": "5691c58779cddf8a7cbede99e2658f09a84b651c1a0e637b26ff44c9cbc99e93",
+        "model/model.pkl": "9c8eae1371e50141ee21cd46c5a2d515b9edbf1fded97a94d375d58a73050265",
+        "model/python_env.yaml": "434c252fa8c47ff388ff8316a444d8ac98d832bef9bff038e14a4e4effe08b87",
+        "model/requirements.txt": "c4598a75709fd2a176dde9c8ed16dcc8487a3012986e85378b3c2548aca18dc3",
+        "model/serving_input_example.json": "87ca916f3908e2d5c1354d77463e5e105aaf8dc68a1a3741a2b235fcc7cb7860"
+      },
+      "reference_changes": {
+        "run_id": false,
+        "model_sha256": false,
+        "dataset_sha256": false
+      },
+      "invariants_passed": true,
+      "validators": {
+        "V1": {
+          "decision": "ACCEPT",
+          "exception_type": null,
+          "message": null,
+          "expected": "ACCEPT",
+          "matches_expectation": true
+        },
+        "V2": {
+          "decision": "ACCEPT",
+          "exception_type": null,
+          "message": null,
+          "expected": "ACCEPT",
+          "matches_expectation": true
+        },
+        "V3": {
+          "decision": "ACCEPT",
+          "exception_type": null,
+          "message": null,
+          "expected": "ACCEPT",
+          "matches_expectation": true
+        }
+      }
+    },
+    {
+      "case": "F1",
+      "suite": "exploratory_pilot_replication",
+      "description": "Remove the copied MLmodel file",
+      "scenario_directory": ".research_artifacts/e5/runs/initial_e1_evaluation/F1",
+      "changed_files": [
+        "model/MLmodel"
+      ],
+      "case_files_sha256": {
+        "dataset.csv": "9b9e3a2fe53a2264f7e756aff00ab883450186c47bfb2027b4d90ca51d23347d",
+        "model/conda.yaml": "e642f6198d0bb9039331086cba083438b7ecdf713e7a5c1faad182b4f89a22df",
+        "model/input_example.json": "5691c58779cddf8a7cbede99e2658f09a84b651c1a0e637b26ff44c9cbc99e93",
+        "model/model.pkl": "9c8eae1371e50141ee21cd46c5a2d515b9edbf1fded97a94d375d58a73050265",
+        "model/python_env.yaml": "434c252fa8c47ff388ff8316a444d8ac98d832bef9bff038e14a4e4effe08b87",
+        "model/requirements.txt": "c4598a75709fd2a176dde9c8ed16dcc8487a3012986e85378b3c2548aca18dc3",
+        "model/serving_input_example.json": "87ca916f3908e2d5c1354d77463e5e105aaf8dc68a1a3741a2b235fcc7cb7860"
+      },
+      "reference_changes": {
+        "run_id": false,
+        "model_sha256": false,
+        "dataset_sha256": false
+      },
+      "invariants_passed": true,
+      "validators": {
+        "V1": {
+          "decision": "REJECT",
+          "exception_type": "RuntimeError",
+          "message": "MLflow model artifact is missing MLmodel: <REPO_ROOT>/.research_artifacts/e5/runs/initial_e1_evaluation/F1/model",
+          "expected": "REJECT",
+          "matches_expectation": true
+        },
+        "V2": {
+          "decision": "REJECT",
+          "exception_type": "FileNotFoundError",
+          "message": "E1 canonical MLflow model artifact missing",
+          "expected": "REJECT",
+          "matches_expectation": true
+        },
+        "V3": {
+          "decision": "REJECT",
+          "exception_type": "FileNotFoundError",
+          "message": "E1 canonical MLflow model artifact missing",
+          "expected": "REJECT",
+          "matches_expectation": true
+        }
+      }
+    },
+    {
+      "case": "F2",
+      "suite": "exploratory_pilot_replication",
+      "description": "Flip one byte in copied model.pkl",
+      "scenario_directory": ".research_artifacts/e5/runs/initial_e1_evaluation/F2",
+      "changed_files": [
+        "model/model.pkl"
+      ],
+      "case_files_sha256": {
+        "dataset.csv": "9b9e3a2fe53a2264f7e756aff00ab883450186c47bfb2027b4d90ca51d23347d",
+        "model/MLmodel": "da23de0336749e7de567eef848c9840cd0675e4888c827b2bb753c698f3f76d8",
+        "model/conda.yaml": "e642f6198d0bb9039331086cba083438b7ecdf713e7a5c1faad182b4f89a22df",
+        "model/input_example.json": "5691c58779cddf8a7cbede99e2658f09a84b651c1a0e637b26ff44c9cbc99e93",
+        "model/model.pkl": "af0e4a206e6f391d9f8a702e51c87bb2170505874a14ce93cc8eb2c143ec593b",
+        "model/python_env.yaml": "434c252fa8c47ff388ff8316a444d8ac98d832bef9bff038e14a4e4effe08b87",
+        "model/requirements.txt": "c4598a75709fd2a176dde9c8ed16dcc8487a3012986e85378b3c2548aca18dc3",
+        "model/serving_input_example.json": "87ca916f3908e2d5c1354d77463e5e105aaf8dc68a1a3741a2b235fcc7cb7860"
+      },
+      "reference_changes": {
+        "run_id": false,
+        "model_sha256": false,
+        "dataset_sha256": false
+      },
+      "invariants_passed": true,
+      "validators": {
+        "V1": {
+          "decision": "ACCEPT",
+          "exception_type": null,
+          "message": null,
+          "expected": "ACCEPT",
+          "matches_expectation": true
+        },
+        "V2": {
+          "decision": "REJECT",
+          "exception_type": "ValueError",
+          "message": "E1 model.pkl SHA-256 mismatch",
+          "expected": "REJECT",
+          "matches_expectation": true
+        },
+        "V3": {
+          "decision": "REJECT",
+          "exception_type": "ValueError",
+          "message": "E1 model.pkl SHA-256 mismatch",
+          "expected": "REJECT",
+          "matches_expectation": true
+        }
+      }
+    },
+    {
+      "case": "F3",
+      "suite": "exploratory_pilot_replication",
+      "description": "Change one feature digit in copied CSV",
+      "scenario_directory": ".research_artifacts/e5/runs/initial_e1_evaluation/F3",
+      "changed_files": [
+        "dataset.csv"
+      ],
+      "case_files_sha256": {
+        "dataset.csv": "e4d85b95e89ccce934fb69d5756f4c58460e454962a2cecdb2cec1025875daa6",
+        "model/MLmodel": "da23de0336749e7de567eef848c9840cd0675e4888c827b2bb753c698f3f76d8",
+        "model/conda.yaml": "e642f6198d0bb9039331086cba083438b7ecdf713e7a5c1faad182b4f89a22df",
+        "model/input_example.json": "5691c58779cddf8a7cbede99e2658f09a84b651c1a0e637b26ff44c9cbc99e93",
+        "model/model.pkl": "9c8eae1371e50141ee21cd46c5a2d515b9edbf1fded97a94d375d58a73050265",
+        "model/python_env.yaml": "434c252fa8c47ff388ff8316a444d8ac98d832bef9bff038e14a4e4effe08b87",
+        "model/requirements.txt": "c4598a75709fd2a176dde9c8ed16dcc8487a3012986e85378b3c2548aca18dc3",
+        "model/serving_input_example.json": "87ca916f3908e2d5c1354d77463e5e105aaf8dc68a1a3741a2b235fcc7cb7860"
+      },
+      "reference_changes": {
+        "run_id": false,
+        "model_sha256": false,
+        "dataset_sha256": false
+      },
+      "invariants_passed": true,
+      "validators": {
+        "V1": {
+          "decision": "ACCEPT",
+          "exception_type": null,
+          "message": null,
+          "expected": "ACCEPT",
+          "matches_expectation": true
+        },
+        "V2": {
+          "decision": "REJECT",
+          "exception_type": "ValueError",
+          "message": "Processed dataset differs from E1 dataset hash",
+          "expected": "REJECT",
+          "matches_expectation": true
+        },
+        "V3": {
+          "decision": "REJECT",
+          "exception_type": "ValueError",
+          "message": "Processed dataset differs from E1 dataset hash",
+          "expected": "REJECT",
+          "matches_expectation": true
+        }
+      }
+    },
+    {
+      "case": "F4",
+      "suite": "exploratory_pilot_replication",
+      "description": "Change copied MLmodel top-level run_id",
+      "scenario_directory": ".research_artifacts/e5/runs/initial_e1_evaluation/F4",
+      "changed_files": [
+        "model/MLmodel"
+      ],
+      "case_files_sha256": {
+        "dataset.csv": "9b9e3a2fe53a2264f7e756aff00ab883450186c47bfb2027b4d90ca51d23347d",
+        "model/MLmodel": "c8804f48d9ac23fd7341b19101a82aa6d21b2bad1859dc7af4dcdd5a2cf7c45d",
+        "model/conda.yaml": "e642f6198d0bb9039331086cba083438b7ecdf713e7a5c1faad182b4f89a22df",
+        "model/input_example.json": "5691c58779cddf8a7cbede99e2658f09a84b651c1a0e637b26ff44c9cbc99e93",
+        "model/model.pkl": "9c8eae1371e50141ee21cd46c5a2d515b9edbf1fded97a94d375d58a73050265",
+        "model/python_env.yaml": "434c252fa8c47ff388ff8316a444d8ac98d832bef9bff038e14a4e4effe08b87",
+        "model/requirements.txt": "c4598a75709fd2a176dde9c8ed16dcc8487a3012986e85378b3c2548aca18dc3",
+        "model/serving_input_example.json": "87ca916f3908e2d5c1354d77463e5e105aaf8dc68a1a3741a2b235fcc7cb7860"
+      },
+      "reference_changes": {
+        "run_id": false,
+        "model_sha256": false,
+        "dataset_sha256": false
+      },
+      "invariants_passed": true,
+      "validators": {
+        "V1": {
+          "decision": "ACCEPT",
+          "exception_type": null,
+          "message": null,
+          "expected": "ACCEPT",
+          "matches_expectation": true
+        },
+        "V2": {
+          "decision": "ACCEPT",
+          "exception_type": null,
+          "message": null,
+          "expected": "ACCEPT",
+          "matches_expectation": true
+        },
+        "V3": {
+          "decision": "REJECT",
+          "exception_type": "ValueError",
+          "message": "MLmodel run_id mismatch",
+          "expected": "REJECT",
+          "matches_expectation": true
+        }
+      }
+    },
+    {
+      "case": "C1",
+      "suite": "prospective_challenge",
+      "description": "Replace MLmodel with invalid YAML, preserving file presence",
+      "scenario_directory": ".research_artifacts/e5/runs/initial_e1_evaluation/C1",
+      "changed_files": [
+        "model/MLmodel"
+      ],
+      "case_files_sha256": {
+        "dataset.csv": "9b9e3a2fe53a2264f7e756aff00ab883450186c47bfb2027b4d90ca51d23347d",
+        "model/MLmodel": "fc37caae8f394ee79309f16dd0e3129e606d933db8334a3209ba76015c61baca",
+        "model/conda.yaml": "e642f6198d0bb9039331086cba083438b7ecdf713e7a5c1faad182b4f89a22df",
+        "model/input_example.json": "5691c58779cddf8a7cbede99e2658f09a84b651c1a0e637b26ff44c9cbc99e93",
+        "model/model.pkl": "9c8eae1371e50141ee21cd46c5a2d515b9edbf1fded97a94d375d58a73050265",
+        "model/python_env.yaml": "434c252fa8c47ff388ff8316a444d8ac98d832bef9bff038e14a4e4effe08b87",
+        "model/requirements.txt": "c4598a75709fd2a176dde9c8ed16dcc8487a3012986e85378b3c2548aca18dc3",
+        "model/serving_input_example.json": "87ca916f3908e2d5c1354d77463e5e105aaf8dc68a1a3741a2b235fcc7cb7860"
+      },
+      "reference_changes": {
+        "run_id": false,
+        "model_sha256": false,
+        "dataset_sha256": false
+      },
+      "invariants_passed": true,
+      "validators": {
+        "V1": {
+          "decision": "ACCEPT",
+          "exception_type": null,
+          "message": null,
+          "expected": "ACCEPT",
+          "matches_expectation": true
+        },
+        "V2": {
+          "decision": "ACCEPT",
+          "exception_type": null,
+          "message": null,
+          "expected": "ACCEPT",
+          "matches_expectation": true
+        },
+        "V3": {
+          "decision": "REJECT",
+          "exception_type": "ParserError",
+          "message": "while parsing a flow sequence\n  in \"<unicode string>\", line 1, column 9:\n    run_id: [unterminated\n            ^\nexpected ',' or ']', but got '<stream end>'\n  in \"<unicode string>\", line 2, column 1:\n    \n    ^",
+          "expected": "REJECT",
+          "matches_expectation": true
+        }
+      }
+    },
+    {
+      "case": "C2",
+      "suite": "prospective_challenge",
+      "description": "Add one harmless top-level MLmodel metadata field",
+      "scenario_directory": ".research_artifacts/e5/runs/initial_e1_evaluation/C2",
+      "changed_files": [
+        "model/MLmodel"
+      ],
+      "case_files_sha256": {
+        "dataset.csv": "9b9e3a2fe53a2264f7e756aff00ab883450186c47bfb2027b4d90ca51d23347d",
+        "model/MLmodel": "0cb84dcc20224a39485686ef4b0f35ecce548c1a6c0a1bf8d6de483d427d256f",
+        "model/conda.yaml": "e642f6198d0bb9039331086cba083438b7ecdf713e7a5c1faad182b4f89a22df",
+        "model/input_example.json": "5691c58779cddf8a7cbede99e2658f09a84b651c1a0e637b26ff44c9cbc99e93",
+        "model/model.pkl": "9c8eae1371e50141ee21cd46c5a2d515b9edbf1fded97a94d375d58a73050265",
+        "model/python_env.yaml": "434c252fa8c47ff388ff8316a444d8ac98d832bef9bff038e14a4e4effe08b87",
+        "model/requirements.txt": "c4598a75709fd2a176dde9c8ed16dcc8487a3012986e85378b3c2548aca18dc3",
+        "model/serving_input_example.json": "87ca916f3908e2d5c1354d77463e5e105aaf8dc68a1a3741a2b235fcc7cb7860"
+      },
+      "reference_changes": {
+        "run_id": false,
+        "model_sha256": false,
+        "dataset_sha256": false
+      },
+      "invariants_passed": true,
+      "validators": {
+        "V1": {
+          "decision": "ACCEPT",
+          "exception_type": null,
+          "message": null,
+          "expected": "ACCEPT",
+          "matches_expectation": true
+        },
+        "V2": {
+          "decision": "ACCEPT",
+          "exception_type": null,
+          "message": null,
+          "expected": "ACCEPT",
+          "matches_expectation": true
+        },
+        "V3": {
+          "decision": "ACCEPT",
+          "exception_type": null,
+          "message": null,
+          "expected": "ACCEPT",
+          "matches_expectation": true
+        }
+      }
+    },
+    {
+      "case": "C3",
+      "suite": "prospective_challenge",
+      "description": "Remove top-level MLmodel run_id",
+      "scenario_directory": ".research_artifacts/e5/runs/initial_e1_evaluation/C3",
+      "changed_files": [
+        "model/MLmodel"
+      ],
+      "case_files_sha256": {
+        "dataset.csv": "9b9e3a2fe53a2264f7e756aff00ab883450186c47bfb2027b4d90ca51d23347d",
+        "model/MLmodel": "ebe8e631035969e354404f67c081d89bd070129679172b828021952411b3bbde",
+        "model/conda.yaml": "e642f6198d0bb9039331086cba083438b7ecdf713e7a5c1faad182b4f89a22df",
+        "model/input_example.json": "5691c58779cddf8a7cbede99e2658f09a84b651c1a0e637b26ff44c9cbc99e93",
+        "model/model.pkl": "9c8eae1371e50141ee21cd46c5a2d515b9edbf1fded97a94d375d58a73050265",
+        "model/python_env.yaml": "434c252fa8c47ff388ff8316a444d8ac98d832bef9bff038e14a4e4effe08b87",
+        "model/requirements.txt": "c4598a75709fd2a176dde9c8ed16dcc8487a3012986e85378b3c2548aca18dc3",
+        "model/serving_input_example.json": "87ca916f3908e2d5c1354d77463e5e105aaf8dc68a1a3741a2b235fcc7cb7860"
+      },
+      "reference_changes": {
+        "run_id": false,
+        "model_sha256": false,
+        "dataset_sha256": false
+      },
+      "invariants_passed": true,
+      "validators": {
+        "V1": {
+          "decision": "ACCEPT",
+          "exception_type": null,
+          "message": null,
+          "expected": "ACCEPT",
+          "matches_expectation": true
+        },
+        "V2": {
+          "decision": "ACCEPT",
+          "exception_type": null,
+          "message": null,
+          "expected": "ACCEPT",
+          "matches_expectation": true
+        },
+        "V3": {
+          "decision": "REJECT",
+          "exception_type": "ValueError",
+          "message": "MLmodel run_id mismatch",
+          "expected": "REJECT",
+          "matches_expectation": true
+        }
+      }
+    },
+    {
+      "case": "C4",
+      "suite": "prospective_challenge",
+      "description": "Change E1 report first-run ID in memory only",
+      "scenario_directory": ".research_artifacts/e5/runs/initial_e1_evaluation/C4",
+      "changed_files": [],
+      "case_files_sha256": {
+        "dataset.csv": "9b9e3a2fe53a2264f7e756aff00ab883450186c47bfb2027b4d90ca51d23347d",
+        "model/MLmodel": "da23de0336749e7de567eef848c9840cd0675e4888c827b2bb753c698f3f76d8",
+        "model/conda.yaml": "e642f6198d0bb9039331086cba083438b7ecdf713e7a5c1faad182b4f89a22df",
+        "model/input_example.json": "5691c58779cddf8a7cbede99e2658f09a84b651c1a0e637b26ff44c9cbc99e93",
+        "model/model.pkl": "9c8eae1371e50141ee21cd46c5a2d515b9edbf1fded97a94d375d58a73050265",
+        "model/python_env.yaml": "434c252fa8c47ff388ff8316a444d8ac98d832bef9bff038e14a4e4effe08b87",
+        "model/requirements.txt": "c4598a75709fd2a176dde9c8ed16dcc8487a3012986e85378b3c2548aca18dc3",
+        "model/serving_input_example.json": "87ca916f3908e2d5c1354d77463e5e105aaf8dc68a1a3741a2b235fcc7cb7860"
+      },
+      "reference_changes": {
+        "run_id": true,
+        "model_sha256": false,
+        "dataset_sha256": false
+      },
+      "invariants_passed": true,
+      "validators": {
+        "V1": {
+          "decision": "ACCEPT",
+          "exception_type": null,
+          "message": null,
+          "expected": "ACCEPT",
+          "matches_expectation": true
+        },
+        "V2": {
+          "decision": "ACCEPT",
+          "exception_type": null,
+          "message": null,
+          "expected": "ACCEPT",
+          "matches_expectation": true
+        },
+        "V3": {
+          "decision": "REJECT",
+          "exception_type": "ValueError",
+          "message": "MLmodel run_id mismatch",
+          "expected": "REJECT",
+          "matches_expectation": true
+        }
+      }
+    },
+    {
+      "case": "C5",
+      "suite": "prospective_challenge",
+      "description": "Flip model.pkl byte and co-update in-memory expected hash",
+      "scenario_directory": ".research_artifacts/e5/runs/initial_e1_evaluation/C5",
+      "changed_files": [
+        "model/model.pkl"
+      ],
+      "case_files_sha256": {
+        "dataset.csv": "9b9e3a2fe53a2264f7e756aff00ab883450186c47bfb2027b4d90ca51d23347d",
+        "model/MLmodel": "da23de0336749e7de567eef848c9840cd0675e4888c827b2bb753c698f3f76d8",
+        "model/conda.yaml": "e642f6198d0bb9039331086cba083438b7ecdf713e7a5c1faad182b4f89a22df",
+        "model/input_example.json": "5691c58779cddf8a7cbede99e2658f09a84b651c1a0e637b26ff44c9cbc99e93",
+        "model/model.pkl": "af0e4a206e6f391d9f8a702e51c87bb2170505874a14ce93cc8eb2c143ec593b",
+        "model/python_env.yaml": "434c252fa8c47ff388ff8316a444d8ac98d832bef9bff038e14a4e4effe08b87",
+        "model/requirements.txt": "c4598a75709fd2a176dde9c8ed16dcc8487a3012986e85378b3c2548aca18dc3",
+        "model/serving_input_example.json": "87ca916f3908e2d5c1354d77463e5e105aaf8dc68a1a3741a2b235fcc7cb7860"
+      },
+      "reference_changes": {
+        "run_id": false,
+        "model_sha256": true,
+        "dataset_sha256": false
+      },
+      "invariants_passed": true,
+      "validators": {
+        "V1": {
+          "decision": "ACCEPT",
+          "exception_type": null,
+          "message": null,
+          "expected": "ACCEPT",
+          "matches_expectation": true
+        },
+        "V2": {
+          "decision": "ACCEPT",
+          "exception_type": null,
+          "message": null,
+          "expected": "ACCEPT",
+          "matches_expectation": true
+        },
+        "V3": {
+          "decision": "ACCEPT",
+          "exception_type": null,
+          "message": null,
+          "expected": "ACCEPT",
+          "matches_expectation": true
+        }
+      }
+    },
+    {
+      "case": "C6",
+      "suite": "prospective_challenge",
+      "description": "Change CSV feature digit and co-update in-memory expected hash",
+      "scenario_directory": ".research_artifacts/e5/runs/initial_e1_evaluation/C6",
+      "changed_files": [
+        "dataset.csv"
+      ],
+      "case_files_sha256": {
+        "dataset.csv": "e4d85b95e89ccce934fb69d5756f4c58460e454962a2cecdb2cec1025875daa6",
+        "model/MLmodel": "da23de0336749e7de567eef848c9840cd0675e4888c827b2bb753c698f3f76d8",
+        "model/conda.yaml": "e642f6198d0bb9039331086cba083438b7ecdf713e7a5c1faad182b4f89a22df",
+        "model/input_example.json": "5691c58779cddf8a7cbede99e2658f09a84b651c1a0e637b26ff44c9cbc99e93",
+        "model/model.pkl": "9c8eae1371e50141ee21cd46c5a2d515b9edbf1fded97a94d375d58a73050265",
+        "model/python_env.yaml": "434c252fa8c47ff388ff8316a444d8ac98d832bef9bff038e14a4e4effe08b87",
+        "model/requirements.txt": "c4598a75709fd2a176dde9c8ed16dcc8487a3012986e85378b3c2548aca18dc3",
+        "model/serving_input_example.json": "87ca916f3908e2d5c1354d77463e5e105aaf8dc68a1a3741a2b235fcc7cb7860"
+      },
+      "reference_changes": {
+        "run_id": false,
+        "model_sha256": false,
+        "dataset_sha256": true
+      },
+      "invariants_passed": true,
+      "validators": {
+        "V1": {
+          "decision": "ACCEPT",
+          "exception_type": null,
+          "message": null,
+          "expected": "ACCEPT",
+          "matches_expectation": true
+        },
+        "V2": {
+          "decision": "ACCEPT",
+          "exception_type": null,
+          "message": null,
+          "expected": "ACCEPT",
+          "matches_expectation": true
+        },
+        "V3": {
+          "decision": "ACCEPT",
+          "exception_type": null,
+          "message": null,
+          "expected": "ACCEPT",
+          "matches_expectation": true
+        }
+      }
+    }
+  ],
+  "summary": {
+    "by_suite": {
+      "pilot_faults": {
+        "V1": {
+          "rejected": 1,
+          "test_errors": 0,
+          "total": 4
+        },
+        "V2": {
+          "rejected": 3,
+          "test_errors": 0,
+          "total": 4
+        },
+        "V3": {
+          "rejected": 4,
+          "test_errors": 0,
+          "total": 4
+        }
+      },
+      "challenge": {
+        "V1": {
+          "rejected": 0,
+          "test_errors": 0,
+          "total": 6
+        },
+        "V2": {
+          "rejected": 0,
+          "test_errors": 0,
+          "total": 6
+        },
+        "V3": {
+          "rejected": 3,
+          "test_errors": 0,
+          "total": 6
+        }
+      }
+    },
+    "unexpected_outcomes": []
+  },
+  "completed": true
+}
